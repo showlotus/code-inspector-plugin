@@ -1,0 +1,15 @@
+{
+  "name": "code-inspector-plugin",
+  "version": "0.0.1",
+  "description": "A webpack plugin to quickly locate code source files.",
+  "main": "index.js",
+  "scripts": {
+    "build": "pnpm --filter ./packages/code-inspector-plugin build",
+    "refresh": "rm -rf **/node_modules && pnpm i --offline"
+  },
+  "keywords": [],
+  "author": "showlotus <showlotus2000@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}

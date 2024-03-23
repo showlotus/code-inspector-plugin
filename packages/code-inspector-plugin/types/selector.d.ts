@@ -1,0 +1,32 @@
+declare class CodeInspectorSelector {
+    server: string;
+    hotkeys: string[];
+    pressKeys: Set<string>;
+    isTrigger: Boolean;
+    className: string;
+    attrs: string;
+    tooltip: HTMLElement;
+    el: HTMLElement;
+    styleId: string;
+    constructor(server: string);
+    init(): void;
+    render(): void;
+    createStyle(): void;
+    createTooltip(): HTMLDivElement;
+    updateTooltipContent(content: string): void;
+    createElement(): HTMLDivElement;
+    show(): void;
+    hide(): void;
+    addGlobalCursorStyle(): void;
+    removeGlobalCursorStyle(): void;
+    updatePosition(position: any): void;
+    isTriggerHotkeys(): boolean;
+    addBlurEvent(): void;
+    addKeydownEvent(): void;
+    addKeyupEvent(): void;
+    addMousemoveEvent(): void;
+    handleClick: (e: Event) => void;
+    handlePointerdown: (e: Event) => void;
+    isFormNode(el: HTMLElement): boolean;
+    findNode(el: any): Element;
+}

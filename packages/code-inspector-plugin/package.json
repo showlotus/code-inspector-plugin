@@ -1,0 +1,35 @@
+{
+  "name": "@showlotus/code-inspector-plugin",
+  "version": "0.0.1-alpha.1",
+  "description": "A webpack plugin to quickly locate code source files.",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "tsc && pnpm run inject:cjs",
+    "watch": "tsc --watch",
+    "refresh": "rm -rf **/node_modules && pnpm i --offline",
+    "inject:cjs": "node ./scripts/inject-cjs-export.js"
+  },
+  "files": [
+    "dist",
+    "types"
+  ],
+  "keywords": [
+    "webpack",
+    "plugin"
+  ],
+  "author": "showlotus <showlotus2000@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/generator": "^7.23.0",
+    "@babel/parser": "^7.23.0",
+    "@babel/traverse": "^7.23.2",
+    "@babel/types": "^7.24.0",
+    "launch-editor-middleware": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/babel__generator": "^7.6.8",
+    "@types/babel__traverse": "^7.20.5",
+    "@types/node": "^20.11.28"
+  }
+}
