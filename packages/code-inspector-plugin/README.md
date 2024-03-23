@@ -1,5 +1,7 @@
 # Code Inspector Plugin
 
+同时按下：`Alt` + `Shift` 时，触发选择器。点击后，在编辑器中打开当前元素对应的代码源文件。
+
 ![demo](https://github.com/showlotus/code-inspector-plugin/raw/master/res/code-inspector-plugin-demo.gif)
 
 ## 安装
