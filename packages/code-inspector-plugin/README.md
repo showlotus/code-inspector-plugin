@@ -1,5 +1,7 @@
 # Code Inspector Plugin
 
+![demo](https://github.com/showlotus/code-inspector-plugin/raw/master/res/code-inspector-plugin-demo.gif)
+
 ## 安装
 
 安装插件
