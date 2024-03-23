@@ -6,7 +6,7 @@ let CodeInspectorPlugin = require('@showlotus/code-inspector-plugin')
 CodeInspectorPlugin = CodeInspectorPlugin.default || CodeInspectorPlugin
 
 module.exports = {
-  mode: 'development',
+  // mode: 'development',
   // mode: 'production',
   entry: './src/index.ts',
   devtool: 'inline-source-map',

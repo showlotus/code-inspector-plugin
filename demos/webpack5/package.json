@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "cross-env NODE_ENV=development webpack-dev-server",
-    "build": "webpack",
+    "serve": "webpack-dev-server --mode=development",
+    "build": "webpack --mode=production",
     "refresh": "rm -rf **/node_modules && pnpm i --offline"
   },
   "keywords": [],
@@ -15,7 +15,6 @@
   "devDependencies": {
     "@showlotus/code-inspector-plugin": "workspace:*",
     "cache-loader": "^4.1.0",
-    "cross-env": "^7.0.3",
     "html-webpack-plugin": "^5.5.3",
     "launch-editor": "^2.6.1",
     "launch-editor-middleware": "^2.6.1",
