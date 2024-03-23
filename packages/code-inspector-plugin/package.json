@@ -1,6 +1,6 @@
 {
   "name": "@showlotus/code-inspector-plugin",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "description": "A webpack plugin to quickly locate code source files.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -19,6 +19,14 @@
     "plugin"
   ],
   "author": "showlotus <showlotus2000@gmail.com>",
+  "homepage": "https://github.com/showlotus/code-inspector-plugin#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/showlotus/code-inspector-plugin"
+  },
+  "bugs": {
+    "url": "https://github.com/showlotus/code-inspector-plugin/issues"
+  },
   "license": "MIT",
   "dependencies": {
     "@babel/generator": "^7.23.0",
