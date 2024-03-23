@@ -57,6 +57,6 @@ Default: `null`
 
 Type: `string`
 
-Default: `code`，可选值：`code`（VS Code）、`VSCode-huawei`、`idea`、`webstorm`。
+Default: `code`，可选值：`code`、`idea`、`webstorm`。
 
 打开文件所用的编辑器命令。
