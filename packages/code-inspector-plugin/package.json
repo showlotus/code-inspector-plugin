@@ -1,6 +1,6 @@
 {
   "name": "@showlotus/code-inspector-plugin",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.2",
   "description": "A webpack plugin to quickly locate code source files.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
