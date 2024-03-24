@@ -16,7 +16,8 @@
   ],
   "keywords": [
     "webpack",
-    "plugin"
+    "plugin",
+    "vue"
   ],
   "author": "showlotus <showlotus2000@gmail.com>",
   "homepage": "https://github.com/showlotus/code-inspector-plugin#readme",
