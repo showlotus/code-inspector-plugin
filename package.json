@@ -1,6 +1,7 @@
 {
   "name": "code-inspector-plugin",
   "version": "0.0.1",
+  "packageManager": "pnpm@8.11.0",
   "description": "A webpack plugin to quickly locate code source files.",
   "main": "index.js",
   "scripts": {
