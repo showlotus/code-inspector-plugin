@@ -15,7 +15,7 @@ interface Options {
     /**
      * 打开文件所用的编辑器
      */
-    editor: 'code' | 'VSCode-huawei' | 'idea' | 'webstorm';
+    editor: 'code' | 'idea' | 'webstorm';
 }
 declare class CodeInspectorPlugin {
     options: Options;

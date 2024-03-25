@@ -1,14 +1,19 @@
 import Button from './components/CalcSum'
 import Circle from './components/Circle'
 import SuperBlock from './components/SuperBlock'
-import usePage from './modules/page'
-import useDetail from './modules/detail'
+import usePage from './modules/use-page'
+import useDetail from './modules/use-detail'
 import Form from './components/Form'
+import useGrid from './modules/use/use-grid'
+import useForm from './modules/use/use-form'
 
 usePage()
 useDetail('', {
   useSync: '',
 })
+
+console.log(useGrid())
+console.log(useForm())
 
 export default {
   data() {
@@ -83,7 +88,11 @@ export default {
         ),
         h({
           render(h: any) {
-            return h('span', { style: { padding: '10px', border: '1px solid' } }, 'render span')
+            return h(
+              'span',
+              { style: { padding: '10px', border: '1px solid' } },
+              'render span'
+            )
           },
         }),
         h(SuperBlock, {

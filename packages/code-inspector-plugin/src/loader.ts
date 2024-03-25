@@ -1,6 +1,6 @@
 import * as t from '@babel/types'
 import * as parser from '@babel/parser'
-import traverse from '@babel/traverse'
+import traverse, { NodePath } from '@babel/traverse'
 import generate from '@babel/generator'
 import path from 'path'
 import fs from 'fs'
@@ -17,8 +17,14 @@ const matchFunctionName = (funcName: string) => {
   return /^use([A-Z][a-z]+)+$/.test(funcName)
 }
 
+const matchFilePath = (filePath: string) => {
+  return /\/use(-[a-z]+)+(\/index)?\.ts/.test(filePath)
+}
+
 const genIIFEAst = (server: string): t.Statement => {
-  const selector = fs.readFileSync(path.resolve(__dirname, 'selector.js'), { encoding: 'utf-8' })
+  const selector = fs.readFileSync(path.resolve(__dirname, 'selector.js'), {
+    encoding: 'utf-8',
+  })
   const content = /* js */ `
     (function () {
       if (!window["${SelectorClassName}"]) {
@@ -31,8 +37,14 @@ const genIIFEAst = (server: string): t.Statement => {
   return ast.program.body[0]
 }
 
-const replaceUseProperty = (properties: t.ObjectProperty[], filePath: string, server: string) => {
-  const idx = properties.findIndex(property => (property.key as any).name === 'use')
+const replaceUseProperty = (
+  properties: t.ObjectProperty[],
+  filePath: string,
+  server: string
+) => {
+  const idx = properties.findIndex(
+    (property) => (property.key as any).name === 'use'
+  )
   if (idx < 0) {
     return
   }
@@ -46,14 +58,20 @@ const replaceUseProperty = (properties: t.ObjectProperty[], filePath: string, se
       t.blockStatement([
         genIIFEAst(server),
         t.returnStatement(
-          t.callExpression(t.memberExpression(t.identifier('Object'), t.identifier('assign')), [
-            t.callExpression(t.identifier((use.value as any).name), [
-              t.spreadElement(t.identifier('args')),
-            ]),
-            t.objectExpression([
-              t.objectProperty(t.identifier('__file'), t.stringLiteral(filePath)),
-            ]),
-          ])
+          t.callExpression(
+            t.memberExpression(t.identifier('Object'), t.identifier('assign')),
+            [
+              t.callExpression(t.identifier((use.value as any).name), [
+                t.spreadElement(t.identifier('args')),
+              ]),
+              t.objectExpression([
+                t.objectProperty(
+                  t.identifier('__file'),
+                  t.stringLiteral(filePath)
+                ),
+              ]),
+            ]
+          )
         ),
       ])
     )
@@ -65,16 +83,46 @@ const replaceUseProperty = (properties: t.ObjectProperty[], filePath: string, se
 const replaceUseFn = (body: t.BlockStatement, filePath: string) => {
   const newBody = t.blockStatement([
     t.returnStatement(
-      t.callExpression(t.memberExpression(t.identifier('Object'), t.identifier('assign')), [
-        t.callExpression(t.functionExpression(null, [], body), []),
-        t.objectExpression([t.objectProperty(t.identifier('__file'), t.stringLiteral(filePath))]),
-      ])
+      t.callExpression(
+        t.memberExpression(t.identifier('Object'), t.identifier('assign')),
+        [
+          t.callExpression(t.functionExpression(null, [], body), []),
+          t.objectExpression([
+            t.objectProperty(t.identifier('__file'), t.stringLiteral(filePath)),
+          ]),
+        ]
+      )
     ),
   ])
   return newBody
 }
 
-export default function (this: any, content: string, sourceMap: any, meta: any) {
+/**
+ * 满足下方所有条件，才对当前函数的返回值注入 `__file` 属性
+ * 1. 父节点类型为 `ExportDefaultDeclaration`
+ * 2. 函数体内的最外层有 `return` 语句，不包括 `if` 语句包裹的 `return` 语句
+ * 3. 文件路径以 `use-xxx-xxx.ts` 或 `use-xxx-xxx/index.ts` 结尾
+ * @param path
+ * @param filePath
+ * @returns
+ */
+const matchFunctionDeclaration = (
+  path: NodePath<t.FunctionDeclaration>,
+  filePath: string
+) => {
+  return (
+    t.isExportDefaultDeclaration(path.parent) &&
+    path.node.body.body.some((node) => t.isReturnStatement(node)) &&
+    matchFilePath(filePath)
+  )
+}
+
+export default function (
+  this: any,
+  content: string,
+  sourceMap: any,
+  meta: any
+) {
   const { server } = this.query
   const relativePath = genRelativePath(this.resourcePath)
   const ast = parser.parse(content, {
@@ -90,16 +138,15 @@ export default function (this: any, content: string, sourceMap: any, meta: any) 
         (declaration.callee as any).name === 'createComposable'
       ) {
         if (t.isObjectExpression(declaration.arguments[0])) {
-          const properties = declaration.arguments[0].properties as t.ObjectProperty[]
+          const properties = declaration.arguments[0]
+            .properties as t.ObjectProperty[]
           replaceUseProperty(properties, relativePath, server)
         }
       }
     },
-    // TODO useFn 与 createComposable 都会被注入 __file，如何优化？
     FunctionDeclaration(path) {
       const node = path.node
-      const funcName = node.id?.name
-      if (!funcName || !matchFunctionName(funcName)) {
+      if (!matchFunctionDeclaration(path, relativePath)) {
         return
       }
 

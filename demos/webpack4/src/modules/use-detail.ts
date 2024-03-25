@@ -1,6 +1,6 @@
-import useDialog from './dialog'
-import useForm from './form'
-import useGrid from './grid'
+import useDialog from './use-dialog'
+import useForm from './use-form'
+import useGrid from './use-grid'
 import { createComposable, reactive } from './utils'
 
 function useFn(props: any, { useSync }: any) {
