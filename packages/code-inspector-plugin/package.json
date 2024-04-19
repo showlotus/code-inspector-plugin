@@ -20,7 +20,7 @@
     "vue"
   ],
   "author": "showlotus <showlotus2000@gmail.com>",
-  "homepage": "https://github.com/showlotus/code-inspector-plugin#readme",
+  "homepage": "https://github.com/showlotus/code-inspector-plugin/tree/master/packages/code-inspector-plugin#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/showlotus/code-inspector-plugin"
